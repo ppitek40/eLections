@@ -6,10 +6,12 @@ using System.Web;
 
 namespace eLections.Models
 {
-    public class Election
+    public class Land
     {
         public int Id { get; set; }
-        public Boolean IsClosed { get; set; }
-        public DateTime EndOfElections { get; set; }
+        [Required]
+        [Display(Name = "Region")]
+        public String Name { get; set; }
+        public Boolean IsCalculated { get; set; }
     }
 }

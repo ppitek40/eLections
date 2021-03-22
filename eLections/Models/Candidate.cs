@@ -9,15 +9,15 @@ namespace eLections.Models
 {
     public class Candidate
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         [Required]
         [Display(Name = "Firstname")]
         public String Name { get; set; }
         [Required]
         [Display(Name = "Surname")]
         public String Surname { get; set; }
-        public Boolean isInSejm { get; set; }
-        public int RegionID { get; set; }
+        public Boolean IsInSejm { get; set; }
+        public int LandId { get; set; }
 
         public String FullName
         {
@@ -27,10 +27,8 @@ namespace eLections.Models
             }
         }
 
-        [Required]
-        [Display(Name = "Partia")]
-        public int PartyID { get; set; }
-        public  Party Party { get; set; }
-        public  Region Region { get; set; }
+        public int PartyId { get; set; }
+        public Party Party { get; set; }
+        public Land Land { get; set; }
     }
 }
