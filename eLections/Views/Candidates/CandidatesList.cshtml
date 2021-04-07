@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "CandidatesList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CandidatesList</h2>
+@Html.ActionLink("Create", "Create", "Candidates", null, new { @class = "btn btn-primary" })
+
+<table id="candidates" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>
+            Candidates
+        </th>
+        <th>
+            Party
+        </th>
+        <th>
+            Region
+        </th>
+        <th>
+            Delete
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            var table = $("#candidates").DataTable({
+                ajax: {
+                    url: "/api/candidates",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "fullName",
+                        render: function(data, type, candidate) {
+                            return "<a href='/candidates/edit/" + candidate.id + "'>" + data + "</a>";
+                        }
+                    },
+                    {
+                        data: "party.shortName"
+                    },
+                    {
+                        data: "land.name"
+                    },
+                    {
+                        data: "id",
+                        render: function(data) {
+                            return "<button data-candidate-id=" + data + " class ='btn-link js-delete'>Delete</button>";
+                        }
+                    }
+                ]
+
+            });
+
+            $("#candidates").on("click",
+                ".js-delete",
+                function() {
+                    var button = $(this);
+
+                    bootbox.confirm("U sure?",
+                        function(result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/candidates/" + button.attr("data-candidate-id"),
+                                    method: "DELETE",
+                                    success: function() {
+                                        table.row(button.parents("tr")).remove().draw();
+                                    }
+                                });
+                            }
+                        });
+                });
+        })
+    </script>
+}

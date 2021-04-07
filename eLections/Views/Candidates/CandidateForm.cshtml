@@ -1,0 +1,40 @@
+﻿@model eLections.Models.ViewModels.CandidateFormViewModel
+@{
+    var action = Model.Candidate == null || Model.Candidate.Id == 0 ? "Create" : "Edit";
+    ViewBag.Title = action;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@action</h2>
+
+@using (Html.BeginForm(action, "Candidates"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Candidate.Firstname)
+        @Html.TextBoxFor(m => m.Candidate.Firstname, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Candidate.Firstname)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Candidate.Surname)
+        @Html.TextBoxFor(m => m.Candidate.Surname, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Candidate.Surname)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Candidate.LandId)
+        @Html.DropDownListFor(m => m.Candidate.LandId, new SelectList(Model.Lands, "Id", "Name"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Candidate.LandId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Candidate.PartyId)
+        @Html.DropDownListFor(m => m.Candidate.PartyId, new SelectList(Model.Parties, "Id", "ShortName"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Candidate.LandId)
+    </div>
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

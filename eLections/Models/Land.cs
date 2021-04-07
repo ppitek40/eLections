@@ -12,6 +12,5 @@ namespace eLections.Models
         [Required]
         [Display(Name = "Region")]
         public String Name { get; set; }
-        public Boolean IsCalculated { get; set; }
     }
 }

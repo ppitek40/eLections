@@ -11,7 +11,8 @@ namespace eLections.Models
         public int Id { get; set; }
         [Required]
         [Display(Name = "Party Name")]
-        public String Name { get; set; }
-        public Boolean IsInSejm { get; set; }
+        public String ShortName { get; set; }
+        public String FullName { get; set; }
+        public bool IsInSejm { get; set; }
     }
 }

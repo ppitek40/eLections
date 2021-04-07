@@ -1,0 +1,31 @@
+﻿@model eLections.Models.Party
+@{
+    var action = Model == null ? "Create" : "Edit";
+    ViewBag.Title = action;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@action</h2>
+
+
+@using (Html.BeginForm(action, "Parties"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.ShortName)
+        @Html.TextBoxFor(m => m.ShortName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ShortName)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.FullName)
+        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.FullName)
+    </div>
+
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

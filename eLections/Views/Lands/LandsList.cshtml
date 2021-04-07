@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "LandsList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>LandsList</h2>
+@Html.ActionLink("Create", "Create", "Lands", null, new { @class = "btn btn-primary" })
+
+<table id="lands" class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Delete
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            var table = $("#lands").DataTable({
+                ajax: {
+                    url: "/api/lands",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function(data, type, land) {
+                            return "<a href='/lands/edit/" + land.id + "'>" + data + "</a>";
+                        }
+                    },
+                    {
+                        data: "id",
+                        render: function(data) {
+                            return "<button data-land-id=" + data + " class ='btn-link js-delete'>Delete</button>";
+                        }
+                    }
+                ]
+
+            });
+
+            $("#lands").on("click",
+                ".js-delete",
+                function() {
+                    var button = $(this);
+
+                    bootbox.confirm("U sure?",
+                        function(result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/lands/" + button.attr("data-land-id"),
+                                    method: "DELETE",
+                                    success: function() {
+                                        table.row(button.parents("tr")).remove().draw();
+                                    }
+                                });
+                            }
+                        });
+                });
+        })
+    </script>
+}
+
+
+

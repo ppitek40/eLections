@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
+using eLections.Dtos;
 using eLections.Models;
+using eLections.Models.ViewModels;
 
 namespace eLections.Controllers
 {
     public class CandidatesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
         public CandidatesController()
         {
             _context = new ApplicationDbContext();
+            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>()));
         }
 
         protected override void Dispose(bool disposing)
@@ -26,14 +31,100 @@ namespace eLections.Controllers
         // GET: Candidates
         public ActionResult Index()
         {
-            return View();
+            return View("CandidatesList");
         }
 
         // GET: Candidates/Create
         public ActionResult Create()
         {
-            throw new NotImplementedException();
-            return View();
+            var viewModel = new CandidateFormViewModel
+            {
+                Candidate = null,
+                Lands = _context.Lands.ToList(),
+                Parties = _context.Parties.ToList()
+
+            };
+            return View("CandidateForm", viewModel);
+        }
+
+
+        //POST: Candidates/Create
+        [HttpPost]
+        public ActionResult Create(Candidate candidate)
+        {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new CandidateFormViewModel
+                {
+                    Candidate = candidate,
+                    Lands = _context.Lands.ToList(),
+                    Parties = _context.Parties.ToList()
+                };
+                return View("CandidateForm", viewModel);
+            }
+
+            _context.Candidates.Add(candidate);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
+        //GET: Candidates/Edit/{id}
+        public ActionResult Edit(int id)
+        {
+            var candidate = _context.Candidates.SingleOrDefault(c => c.Id == id);
+            if (candidate == null)
+            {
+                return HttpNotFound();
+            }
+
+
+            var viewModel = new CandidateFormViewModel
+            {
+                Candidate = candidate,
+                Lands = _context.Lands.ToList(),
+                Parties = _context.Parties.ToList()
+            };
+            return View("CandidateForm", viewModel);
+        }
+        //PUT: Candidates/Edit/{id}
+        [HttpPut]
+        public ActionResult Edit(Candidate candidate)
+        {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new CandidateFormViewModel
+                {
+                    Candidate = candidate,
+                    Lands = _context.Lands.ToList(),
+                    Parties = _context.Parties.ToList()
+                };
+                return View("CandidateForm", viewModel);
+            }
+
+            var candidateInDb = _context.Candidates.SingleOrDefault(c => c.Id == candidate.Id);
+            if (candidateInDb == null)
+            {
+                return HttpNotFound();
+            }
+
+            _mapper.Map<Candidate, Candidate>(candidate, candidateInDb);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        // DELETE: /Candidates/Delete/{id}
+        [HttpDelete]
+        public ActionResult Delete(int id)
+        {
+            var candidateInDb = _context.Candidates.SingleOrDefault(c => c.Id == id);
+            if (candidateInDb == null)
+            {
+                return HttpNotFound();
+            }
+
+            _context.Candidates.Remove(candidateInDb);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

@@ -20,6 +20,9 @@ namespace eLections.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Candidate> Candidates { get; set; }
+        public DbSet<Party> Parties { get; set; }
+        public DbSet<Land> Lands { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

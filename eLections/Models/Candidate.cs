@@ -12,7 +12,7 @@ namespace eLections.Models
         public int Id { get; set; }
         [Required]
         [Display(Name = "Firstname")]
-        public String Name { get; set; }
+        public String Firstname { get; set; }
         [Required]
         [Display(Name = "Surname")]
         public String Surname { get; set; }
@@ -23,7 +23,7 @@ namespace eLections.Models
         {
             get
             {
-                return Name + " " + Surname;
+                return Firstname + " " + Surname;
             }
         }
 
