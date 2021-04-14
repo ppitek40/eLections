@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
@@ -10,6 +12,7 @@ using eLections.Models.ViewModels;
 
 namespace eLections.Controllers
 {
+    [Authorize(Roles="CanManageCandidates")]
     public class CandidatesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -87,6 +90,7 @@ namespace eLections.Controllers
             };
             return View("CandidateForm", viewModel);
         }
+
         //PUT: Candidates/Edit/{id}
         [HttpPut]
         public ActionResult Edit(Candidate candidate)
@@ -112,6 +116,7 @@ namespace eLections.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+
         // DELETE: /Candidates/Delete/{id}
         [HttpDelete]
         public ActionResult Delete(int id)
@@ -124,6 +129,31 @@ namespace eLections.Controllers
 
             _context.Candidates.Remove(candidateInDb);
             _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        // GET: /Candidates/Votes/{id}
+        public async Task<ActionResult> Votes(int id)
+        {
+            var candidate = await _context.Candidates.FirstOrDefaultAsync(c => c.Id == id);
+            if (candidate == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(candidate);
+        }
+        // POST: /Candidates/Votes/{id}
+        [HttpPost]
+        public async Task<ActionResult> Votes(Candidate candidate, int id)
+        {
+            var candidateInDb = await _context.Candidates.FirstOrDefaultAsync(c => c.Id == id);
+            if (candidate==null)
+            {
+                return HttpNotFound();
+            }
+
+            candidateInDb.NumberOfVotes = candidate.NumberOfVotes;
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
     }

@@ -1,0 +1,73 @@
+﻿@model IEnumerable<eLections.Models.Election>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+<button id="create" class="btn btn-primary">Create</button>
+
+<table id="elections" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                Start Date
+            </th>
+            <th>
+                End Date
+            </th>
+            <th>
+                Status
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var election in Model)
+        {
+            <tr>
+                <td>@election.StartOfElections</td>
+                <td>@election.EndOfElections</td>
+                <td>
+                    @if (election.EndOfElections == null)
+                    {
+                        @Html.Raw("Active");<button id="calculate" election-id=@election.Id class="btn btn-info left-space">Calculate</button>
+                    }
+                    else
+                    {
+                        @Html.Raw("Finished");
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#elections").DataTable();
+
+            $("#create").on("click",function() {
+                $.ajax({
+                    url: "/api/elections/",
+                    method: "POST",
+                    success: function() {
+                        location.reload();
+                    }
+                });
+            })
+
+            $("#calculate").on("click", function () {
+                var button = $(this);
+                $.ajax({
+                    url: "/api/elections/calculate/"+button.attr("election-id"),
+                    method: "POST",
+                    success: function () {
+                        location.reload();
+                    }
+                });
+            })
+        });
+    </script>
+}

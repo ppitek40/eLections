@@ -9,7 +9,8 @@ namespace eLections.Models
     public class Election
     {
         public int Id { get; set; }
-        public Boolean IsClosed { get; set; }
-        public DateTime EndOfElections { get; set; }
+        public DateTime StartOfElections { get; set; }
+        public DateTime? EndOfElections { get; set; }
+
     }
 }

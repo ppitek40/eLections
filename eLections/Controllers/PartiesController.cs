@@ -8,6 +8,7 @@ using eLections.Models;
 
 namespace eLections.Controllers
 {
+    [Authorize(Roles = "CanManageParties")]
     public class PartiesController : Controller
     {
         private readonly ApplicationDbContext _context;

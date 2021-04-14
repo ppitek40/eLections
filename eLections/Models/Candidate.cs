@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Drawing;
 using System.Linq;
 using System.Web;
@@ -17,6 +18,8 @@ namespace eLections.Models
         [Display(Name = "Surname")]
         public String Surname { get; set; }
         public Boolean IsInSejm { get; set; }
+        [Range(0,Int32.MaxValue)]
+        public int? NumberOfVotes { get; set; }
         public int LandId { get; set; }
 
         public String FullName

@@ -10,6 +10,7 @@ namespace eLections.Dtos
     {
         public int Id { get; set; }
         [Required]
-        public String Name { get; set; }
+        public String ShortName { get; set; }
+        public String FullName { get; set; }
     }
 }

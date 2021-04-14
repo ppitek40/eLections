@@ -1,0 +1,33 @@
+﻿@model eLections.Models.ViewModels.UserViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.UserName</h2>
+<h3>Land: @if (Model.Land != null)
+          {
+              @Model.Land;
+          }
+</h3>
+<h3>Role List: </h3>
+<table id="roles" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                Role
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model.RolesList)
+        {
+            <tr>
+                <td>@role.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

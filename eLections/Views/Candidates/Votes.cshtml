@@ -1,0 +1,23 @@
+﻿@model eLections.Models.Candidate
+@{
+    ViewBag.Title = "Votes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.FullName</h2>
+
+@using (Html.BeginForm("Votes", "Candidates"))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.NumberOfVotes)
+        @Html.TextBoxFor(m => m.NumberOfVotes, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NumberOfVotes)
+    </div>
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary right-space">Save</button>
+    <button class="btn">Cancel</button>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

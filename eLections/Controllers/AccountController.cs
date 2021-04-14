@@ -139,7 +139,14 @@ namespace eLections.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            var DBcontext = new ApplicationDbContext();
+
+            var viewModel = new RegisterViewModel
+            {
+                Lands = DBcontext.Lands.ToList()
+            };
+            DBcontext.Dispose();
+            return View(viewModel);
         }
 
         //
@@ -151,7 +158,12 @@ namespace eLections.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email, 
+                    Email = model.Email,
+                    LandId = model.LandId
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

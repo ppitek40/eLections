@@ -1,0 +1,26 @@
+﻿@model List<eLections.Models.ViewModels.ManageRoleViewModel>
+@{
+    ViewBag.Title = "ManageRoles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ManageRoles</h2>
+
+
+@using (Html.BeginForm("ManageRoles","Administration"))
+{
+    for(var i = 0; i < Model.Count; i++)
+    {
+        <div class="checkbox">
+                @Html.CheckBoxFor(m =>m[i].IsSelected, new { @class = "checkbox" })<label>@Model[i].RoleDescription</label>
+        </div>
+        @Html.HiddenFor(m=> m[i].RoleId)
+        @Html.HiddenFor(m=> m[i].RoleName)
+    }
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary right-space">Save</button>
+    <button class="btn">Cancel</button>
+}
+
+
+

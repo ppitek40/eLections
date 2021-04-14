@@ -8561,3 +8561,19 @@ a.list-group-item-danger.active {
 .popover {
     color: #555555;
 }
+
+.right-space {
+    margin-right: 15px;
+}
+.left-space {
+    margin-left: 15px;
+}
+
+.bottom-space {
+    margin-bottom: 15px;
+}
+
+.top-space {
+    margin-top: 15px;
+}
+

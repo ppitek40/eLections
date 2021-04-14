@@ -1,4 +1,5 @@
-﻿
+﻿@using eLections.Models
+
 @{
     ViewBag.Title = "CandidatesList";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,20 +10,23 @@
 
 <table id="candidates" class="table table-bordered table-hover">
     <thead>
-    <tr>
-        <th>
-            Candidates
-        </th>
-        <th>
-            Party
-        </th>
-        <th>
-            Region
-        </th>
-        <th>
-            Delete
-        </th>
-    </tr>
+        <tr>
+            <th>
+                Candidates
+            </th>
+            <th>
+                Number of votes
+            </th>
+            <th>
+                Party
+            </th>
+            <th>
+                Land
+            </th>
+            <th>
+                Delete
+            </th>
+        </tr>
     </thead>
     <tbody>
     </tbody>
@@ -42,17 +46,24 @@
                         render: function(data, type, candidate) {
                             return "<a href='/candidates/edit/" + candidate.id + "'>" + data + "</a>";
                         }
-                    },
-                    {
+                    }, {
+                        data: "numberOfVotes",
+                        render: function(data, type, candidate) {
+                            if (data == 0) {
+
+                                return "<a href='/candidates/votes/"+candidate.id+"' class='btn btn-info'>Add votes</a>"
+                            }
+                            return data+ "<a href='/candidates/votes/" + candidate.id + "' class='btn btn-info left-space'>Change votes</a>";
+                        }
+                    }, {
                         data: "party.shortName"
-                    },
-                    {
+
+                    }, {
                         data: "land.name"
-                    },
-                    {
+                    }, {
                         data: "id",
                         render: function(data) {
-                            return "<button data-candidate-id=" + data + " class ='btn-link js-delete'>Delete</button>";
+                            return "<button data-candidate-id=" + data + " class ='btn btn-danger js-delete'>Delete</button>";
                         }
                     }
                 ]

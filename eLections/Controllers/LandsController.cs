@@ -8,6 +8,7 @@ using eLections.Models;
 
 namespace eLections.Controllers
 {
+    [Authorize(Roles="CanManageLands")]
     public class LandsController : Controller
     {
         private readonly ApplicationDbContext _context;

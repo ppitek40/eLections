@@ -21,10 +21,12 @@ namespace eLections.Dtos
         {
             get { return Firstname + " " + Surname; }
         }
+
+        public int NumberOfVotes { get; set; }
         public int LandId { get; set; }
 
         public int PartyId { get; set; }
-        public Party Party { get; set; }
+        public PartyDto Party { get; set; }
         public Land Land { get; set; }
     }
 }
