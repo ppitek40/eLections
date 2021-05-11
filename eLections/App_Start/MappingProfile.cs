@@ -14,7 +14,7 @@ namespace eLections
             CreateMap<Party, PartyDto>();
             CreateMap<PartyDto, Party>();
             CreateMap<Party, Party>();
-            CreateMap<Land, Land>();
+            CreateMap<Constituency, Constituency>();
         }
     }
 }

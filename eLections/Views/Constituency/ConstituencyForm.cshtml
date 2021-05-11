@@ -1,4 +1,4 @@
-﻿@model eLections.Models.Land
+﻿@model eLections.Models.Constituency
 @{
     var action = Model == null || Model.Id == 0 ? "Create" : "Edit";
     ViewBag.Title = action;
@@ -7,7 +7,7 @@
 
 <h2>@action</h2>
 
-@using (Html.BeginForm(action, "Lands"))
+@using (Html.BeginForm(action, "Constituencies"))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Name)

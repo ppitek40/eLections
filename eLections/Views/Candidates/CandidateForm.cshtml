@@ -20,14 +20,14 @@
         @Html.ValidationMessageFor(m => m.Candidate.Surname)
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Candidate.LandId)
-        @Html.DropDownListFor(m => m.Candidate.LandId, new SelectList(Model.Lands, "Id", "Name"), new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Candidate.LandId)
+        @Html.LabelFor(m => m.Candidate.ConstituencyId)
+        @Html.DropDownListFor(m => m.Candidate.ConstituencyId, new SelectList(Model.Constituencies, "Id", "Name"), new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Candidate.ConstituencyId)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Candidate.PartyId)
         @Html.DropDownListFor(m => m.Candidate.PartyId, new SelectList(Model.Parties, "Id", "ShortName"), new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Candidate.LandId)
+        @Html.ValidationMessageFor(m => m.Candidate.ConstituencyId)
     </div>
     @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary">Save</button>

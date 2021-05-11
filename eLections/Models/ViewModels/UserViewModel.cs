@@ -9,7 +9,7 @@ namespace eLections.Models.ViewModels
     {
         public string Id { get; set; }
         public string UserName { get; set; }
-        public Land Land { get; set; }
+        public Constituency Constituency { get; set; }
         public List<ApplicationRole> RolesList { get; set; }
 
     }

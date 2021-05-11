@@ -7,11 +7,11 @@ using System.Web;
 
 namespace eLections.Models
 {
-    public class Land
+    public class Constituency
     {
         public int Id { get; set; }
         [Required]
-        [Display(Name = "Region")]
+        [Display(Name = "Name")]
         public String Name { get; set; }
         
         public int Seats { get; set; }

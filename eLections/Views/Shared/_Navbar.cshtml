@@ -7,14 +7,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("e-Lections", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Candidates", "Index", "Candidates")</li>
                 <li>@Html.ActionLink("Parties", "Index", "Parties")</li>
-                <li>@Html.ActionLink("Lands", "Index", "Lands")</li>
+                <li>@Html.ActionLink("Constituencies", "Index", "Constituencies")</li>
                 <li>@Html.ActionLink("Administration", "Index", "Administration")</li>
+                <li>@Html.ActionLink("Elections", "Index", "Elections")</li>
             </ul>
             @Html.Partial("_LoginPartial")
         </div>

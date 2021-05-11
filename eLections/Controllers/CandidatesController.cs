@@ -43,7 +43,7 @@ namespace eLections.Controllers
             var viewModel = new CandidateFormViewModel
             {
                 Candidate = null,
-                Lands = _context.Lands.ToList(),
+                Constituencies = _context.Constituencies.ToList(),
                 Parties = _context.Parties.ToList()
 
             };
@@ -60,7 +60,7 @@ namespace eLections.Controllers
                 var viewModel = new CandidateFormViewModel
                 {
                     Candidate = candidate,
-                    Lands = _context.Lands.ToList(),
+                    Constituencies = _context.Constituencies.ToList(),
                     Parties = _context.Parties.ToList()
                 };
                 return View("CandidateForm", viewModel);
@@ -85,7 +85,7 @@ namespace eLections.Controllers
             var viewModel = new CandidateFormViewModel
             {
                 Candidate = candidate,
-                Lands = _context.Lands.ToList(),
+                Constituencies = _context.Constituencies.ToList(),
                 Parties = _context.Parties.ToList()
             };
             return View("CandidateForm", viewModel);
@@ -100,7 +100,7 @@ namespace eLections.Controllers
                 var viewModel = new CandidateFormViewModel
                 {
                     Candidate = candidate,
-                    Lands = _context.Lands.ToList(),
+                    Constituencies = _context.Constituencies.ToList(),
                     Parties = _context.Parties.ToList()
                 };
                 return View("CandidateForm", viewModel);

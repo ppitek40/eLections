@@ -7,7 +7,7 @@ namespace eLections.Models
     {
         public DbSet<Candidate> Candidates { get; set; }
         public DbSet<Party> Parties { get; set; }
-        public DbSet<Land> Lands { get; set; }
+        public DbSet<Constituency> Constituencies { get; set; }
         public DbSet<Election> Elections { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection")

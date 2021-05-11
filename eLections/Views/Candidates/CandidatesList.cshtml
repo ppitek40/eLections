@@ -1,13 +1,12 @@
 ﻿@using eLections.Models
 
 @{
-    ViewBag.Title = "CandidatesList";
+    ViewBag.Title = "Candidates";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>CandidatesList</h2>
-@Html.ActionLink("Create", "Create", "Candidates", null, new { @class = "btn btn-primary" })
-
+<h2>Candidates</h2>
+@Html.ActionLink("Create", "Create", "Candidates", null, new { @class = "btn btn-primary bottom-space" })
 <table id="candidates" class="table table-bordered table-hover">
     <thead>
         <tr>
@@ -21,7 +20,7 @@
                 Party
             </th>
             <th>
-                Land
+                Constituency
             </th>
             <th>
                 Delete
@@ -51,19 +50,19 @@
                         render: function(data, type, candidate) {
                             if (data == 0) {
 
-                                return "<a href='/candidates/votes/"+candidate.id+"' class='btn btn-info'>Add votes</a>"
+                                return "<a href='/candidates/votes/"+candidate.id+"' class='btn btn-info btn-smaller'>Add votes</a>"
                             }
-                            return data+ "<a href='/candidates/votes/" + candidate.id + "' class='btn btn-info left-space'>Change votes</a>";
+                            return data+ "<a href='/candidates/votes/" + candidate.id + "' class='btn btn-info left-space btn-smaller'>Change votes</a>";
                         }
                     }, {
                         data: "party.shortName"
 
                     }, {
-                        data: "land.name"
+                        data: "constituency.name"
                     }, {
                         data: "id",
                         render: function(data) {
-                            return "<button data-candidate-id=" + data + " class ='btn btn-danger js-delete'>Delete</button>";
+                            return "<button data-candidate-id=" + data + " class ='btn btn-danger btn-smaller js-delete'>Delete</button>";
                         }
                     }
                 ]

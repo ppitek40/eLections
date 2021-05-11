@@ -18,9 +18,11 @@ namespace eLections.Models
         [Display(Name = "Surname")]
         public String Surname { get; set; }
         public Boolean IsInSejm { get; set; }
+        [Display(Name = "Number of votes")]
         [Range(0,Int32.MaxValue)]
         public int? NumberOfVotes { get; set; }
-        public int LandId { get; set; }
+        [Display(Name="Constituency")]
+        public int ConstituencyId { get; set; }
 
         public String FullName
         {
@@ -29,9 +31,9 @@ namespace eLections.Models
                 return Firstname + " " + Surname;
             }
         }
-
+        [Display(Name="Party")]
         public int PartyId { get; set; }
         public Party Party { get; set; }
-        public Land Land { get; set; }
+        public Constituency Constituency { get; set; }
     }
 }

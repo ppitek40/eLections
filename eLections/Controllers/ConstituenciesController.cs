@@ -9,13 +9,13 @@ using eLections.Models;
 namespace eLections.Controllers
 {
     [Authorize(Roles="CanManageLands")]
-    public class LandsController : Controller
+    public class ConstituenciesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
         private readonly IMapper _mapper;
 
-        public LandsController()
+        public ConstituenciesController()
         {
             _context = new ApplicationDbContext();
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>()));
@@ -27,61 +27,61 @@ namespace eLections.Controllers
             base.Dispose(disposing);
         }
 
-        // GET: Lands
+        // GET: Constituencies
         public ActionResult Index()
         {
-            return View("LandsList");
+            return View("ConstituencyList");
         }
         
-        // GET: Lands/Create
+        // GET: Constituencies/Create
         public ActionResult Create()
         {
-            return View("LandForm");
+            return View("ConstituencyForm");
         }
 
 
-        // POST: Lands/Create
+        // POST: Constituencies/Create
         [HttpPost]
-        public ActionResult Create(Land land)
+        public ActionResult Create(Constituency constituency)
         {
             if (!ModelState.IsValid)
             {
-                return View("LandForm", land);
+                return View("ConstituencyForm", constituency);
             }
 
-            _context.Lands.Add(land);
+            _context.Constituencies.Add(constituency);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        // GET: Lands/Edit/{id}
+        // GET: Constituencies/Edit/{id}
         public ActionResult Edit(int id)
         {
-            var land = _context.Lands.SingleOrDefault(l => l.Id == id);
-            if (land == null)
+            var constituency = _context.Constituencies.SingleOrDefault(l => l.Id == id);
+            if (constituency == null)
             {
                 return HttpNotFound();
             }
 
-            return View("LandForm",land);
+            return View("ConstituencyForm", constituency);
         }
 
-        // POST: Lands/Create
+        // POST: Constituencies/Create
         [HttpPost]
-        public ActionResult Edit(Land land)
+        public ActionResult Edit(Constituency constituency)
         {
             if (!ModelState.IsValid)
             {
-                return View("LandForm", land);
+                return View("ConstituencyForm", constituency);
             }
 
-            var landInDb = _context.Lands.SingleOrDefault(l => l.Id == land.Id);
-            if (landInDb == null)
+            var constituencyInDb = _context.Constituencies.SingleOrDefault(c => c.Id == constituency.Id);
+            if (constituencyInDb == null)
             {
                 return HttpNotFound();
             }
 
-            _mapper.Map<Land, Land>(land, landInDb);
+            _mapper.Map<Constituency, Constituency>(constituency, constituencyInDb);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -29,15 +29,15 @@ namespace eLections.Helpers
             return !_context.Candidates.Any(c => c.NumberOfVotes == null);
         }
 
-        public List<Candidate> GetCandidatesFromLand(int landId)
+        public List<Candidate> GetCandidatesFromConstituency(int constituencyId)
         {
-            return _context.Candidates.Where(c => c.LandId == landId).ToList();
+            return _context.Candidates.Where(c => c.ConstituencyId == constituencyId).ToList();
         }
 
-        public int GetSumOfVotesOfPartyInLand(int partyId, int landId)
+        public int GetSumOfVotesOfPartyInConstituency(int partyId, int constituencyId)
         {
             return _context.Candidates
-                .Where(c => c.PartyId == partyId && c.LandId == landId)
+                .Where(c => c.PartyId == partyId && c.ConstituencyId == constituencyId)
                 .Sum(c => c.NumberOfVotes.Value);
         }
 
@@ -47,12 +47,12 @@ namespace eLections.Helpers
             return summaryVotes;
         }
 
-        public void GiveSeatsInLand(List<PartyLandVotesMultiplier> partyLandVotes, int landId)
+        public void GiveSeatsInConstituency(List<PartyConstituencyVotesMultiplier> partyConstituencyVotes, int constituencyId)
         {
-            foreach (var party in partyLandVotes)
+            foreach (var party in partyConstituencyVotes)
             {
                 var candidates = _context.Candidates
-                    .Where(c => c.PartyId == party.PartyId && c.LandId==party.LandId)
+                    .Where(c => c.PartyId == party.PartyId && c.ConstituencyId==party.ConstituencyId)
                     .OrderByDescending(c=>c.NumberOfVotes.Value)
                     .Take(party.Multiplier);
                 candidates.ForEach(c => c.IsInSejm = true);

@@ -23,9 +23,9 @@ namespace eLections.Dtos
         }
 
         public int NumberOfVotes { get; set; }
-        public int LandId { get; set; }
+        public int ConstituencyId { get; set; }
         public int PartyId { get; set; }
         public PartyDto Party { get; set; }
-        public Land Land { get; set; }
+        public Constituency Constituency { get; set; }
     }
 }

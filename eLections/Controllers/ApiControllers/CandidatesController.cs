@@ -32,7 +32,7 @@ namespace eLections.Controllers.ApiControllers
         //GET /api/Candidates
         public IHttpActionResult GetCandidates(string query = null)
         {
-            var candidatesQuery = _context.Candidates.Include(c => c.Land).Include(c => c.Party);
+            var candidatesQuery = _context.Candidates.Include(c => c.Constituency).Include(c => c.Party);
             if (!query.IsNullOrWhiteSpace())
             {
                 candidatesQuery = candidatesQuery.Where(c => c.FullName.Contains(query));

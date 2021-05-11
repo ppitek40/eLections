@@ -13,7 +13,7 @@
                 Name
             </th>
             <th>
-                Land
+                Constituency
             </th>
             <th>
                 Change Roles
@@ -27,9 +27,9 @@
             <tr>
                 <td>@Html.ActionLink(user.UserName, "Details", "Administration", new { id = user.Id }, null)</td>
                 <td>
-                    @if (user.Land != null)
+                    @if (user.Constituency != null)
                     {
-                        @Html.Raw(user.Land.Name);
+                        @Html.Raw(user.Constituency.Name);
                     }
                     else
                     {

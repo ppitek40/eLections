@@ -80,9 +80,9 @@ namespace eLections.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        public int LandId { get; set; }
+        public int ConstituencyId { get; set; }
 
-        public IEnumerable<Land> Lands { get; set; }
+        public IEnumerable<Constituency> Constituencies { get; set; }
     }
 
     public class ResetPasswordViewModel

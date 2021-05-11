@@ -8,11 +8,11 @@ using eLections.Models;
 
 namespace eLections.Controllers.ApiControllers
 {
-    public class LandsController : ApiController
+    public class ConstituenciesController : ApiController
     {
         private readonly ApplicationDbContext _context;
 
-        public LandsController()
+        public ConstituenciesController()
         {
             _context = new ApplicationDbContext();
         }
@@ -22,24 +22,24 @@ namespace eLections.Controllers.ApiControllers
             _context.Dispose();
             base.Dispose(disposing);
         }
-        // GET: /api/lands
-        public IHttpActionResult GetLands()
+        // GET: /api/constituencies
+        public IHttpActionResult GetConstituencies()
         {
-            return Ok(_context.Lands.ToList());
+            return Ok(_context.Constituencies.ToList());
         }
 
 
-        // DELETE: /api/lands/{id}
+        // DELETE: /api/constituencies/{id}
         [HttpDelete]
-        public IHttpActionResult DeleteLands(int id)
+        public IHttpActionResult DeleteConstituencies(int id)
         {
-            var land = _context.Lands.SingleOrDefault(l => l.Id == id);
-            if (land == null)
+            var constituency = _context.Constituencies.SingleOrDefault(c => c.Id == id);
+            if (constituency == null)
             {
                 return NotFound();
             }
 
-            _context.Lands.Remove(land);
+            _context.Constituencies.Remove(constituency);
             _context.SaveChanges();
             return Ok();
         }

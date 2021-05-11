@@ -1,13 +1,13 @@
 ﻿
 @{
-    ViewBag.Title = "LandsList";
+    ViewBag.Title = "Constituencies";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>LandsList</h2>
-@Html.ActionLink("Create", "Create", "Lands", null, new { @class = "btn btn-primary" })
+<h2>Constituencies</h2>
+@Html.ActionLink("Create", "Create", "Constituencies", null, new { @class = "btn btn-primary" })
 
-<table id="lands" class="table table-bordered table-hover">
+<table id="constituencies" class="table table-bordered table-hover">
     <thead>
     <tr>
         <th>
@@ -25,29 +25,29 @@
 {
     <script>
         $(document).ready(function() {
-            var table = $("#lands").DataTable({
+            var table = $("#constituencies").DataTable({
                 ajax: {
-                    url: "/api/lands",
+                    url: "/api/constituencies",
                     dataSrc: ""
                 },
                 columns: [
                     {
                         data: "name",
-                        render: function(data, type, land) {
-                            return "<a href='/lands/edit/" + land.id + "'>" + data + "</a>";
+                        render: function (data, type, constituency) {
+                            return "<a href='/constituencies/edit/" + constituency.id + "'>" + data + "</a>";
                         }
                     },
                     {
                         data: "id",
                         render: function(data) {
-                            return "<button data-land-id=" + data + " class ='btn-link js-delete'>Delete</button>";
+                            return "<button data-constituency-id=" + data + " class ='btn-link js-delete'>Delete</button>";
                         }
                     }
                 ]
 
             });
 
-            $("#lands").on("click",
+            $("#constituencies").on("click",
                 ".js-delete",
                 function() {
                     var button = $(this);
@@ -56,7 +56,7 @@
                         function(result) {
                             if (result) {
                                 $.ajax({
-                                    url: "/api/lands/" + button.attr("data-land-id"),
+                                    url: "/api/constituencies/" + button.attr("data-constituency-id"),
                                     method: "DELETE",
                                     success: function() {
                                         table.row(button.parents("tr")).remove().draw();

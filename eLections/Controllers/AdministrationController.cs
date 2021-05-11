@@ -37,7 +37,7 @@ namespace eLections.Controllers
         // GET: Administration
         public ActionResult Index()
         {
-            var users = _userManager.Users.Include(u=> u.Land).ToList();
+            var users = _userManager.Users.Include(u=> u.Constituency).ToList();
             var listOfUserViewModels = new List<UserViewModel>();
             foreach (var user in users)
             {
@@ -45,7 +45,7 @@ namespace eLections.Controllers
                 {
                     Id=user.Id,
                     UserName = user.UserName,
-                    Land = user.Land,
+                    Constituency = user.Constituency,
                     RolesList = null
                 });
             }
@@ -55,7 +55,7 @@ namespace eLections.Controllers
         public ActionResult Details(string id)
         {
             var user = _userManager.Users
-                                    .Include(u => u.Land)
+                                    .Include(u => u.Constituency)
                                     .SingleOrDefault(u => u.Id == id);
             
             if (user == null)
@@ -70,7 +70,7 @@ namespace eLections.Controllers
             {
                 Id = user.Id,
                 UserName = user.UserName,
-                Land = user.Land,
+                Constituency = user.Constituency,
                 RolesList = roles
 
             };

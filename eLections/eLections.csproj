@@ -185,12 +185,12 @@
     <Compile Include="Controllers\AdministrationController.cs" />
     <Compile Include="Controllers\ApiControllers\CandidatesController.cs" />
     <Compile Include="Controllers\ApiControllers\ElectionsController.cs" />
-    <Compile Include="Controllers\ApiControllers\LandsController.cs" />
+    <Compile Include="Controllers\ApiControllers\ConstituenciesController.cs" />
     <Compile Include="Controllers\ApiControllers\PartiesController.cs" />
     <Compile Include="Controllers\CandidatesController.cs" />
     <Compile Include="Controllers\ElectionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LandsController.cs" />
+    <Compile Include="Controllers\ConstituenciesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PartiesController.cs" />
     <Compile Include="Dtos\CandidateDto.cs" />
@@ -257,6 +257,10 @@
     <Compile Include="Migrations\202104202043260_AddSeatsToLands.Designer.cs">
       <DependentUpon>202104202043260_AddSeatsToLands.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105112033053_PartyFullNameIsRequired.cs" />
+    <Compile Include="Migrations\202105112033053_PartyFullNameIsRequired.Designer.cs">
+      <DependentUpon>202105112033053_PartyFullNameIsRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -264,11 +268,11 @@
     <Compile Include="Models\Candidate.cs" />
     <Compile Include="Models\Election.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Land.cs" />
+    <Compile Include="Models\Constituency.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Party.cs" />
-    <Compile Include="Models\PartyLandVotes.cs" />
-    <Compile Include="Models\PartyLandVotesMultiplier.cs" />
+    <Compile Include="Models\PartyConstituencyVotes.cs" />
+    <Compile Include="Models\PartyConstituencyVotesMultiplier.cs" />
     <Compile Include="Models\ViewModels\CandidateFormViewModel.cs" />
     <Compile Include="Models\ViewModels\ManageRoleViewModel.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
@@ -575,8 +579,8 @@
     <Content Include="Views\Candidates\CandidatesList.cshtml" />
     <Content Include="Views\Parties\PartiesList.cshtml" />
     <Content Include="Views\Parties\PartyForm.cshtml" />
-    <Content Include="Views\Lands\LandsList.cshtml" />
-    <Content Include="Views\Lands\LandForm.cshtml" />
+    <Content Include="Views\Constituency\ConstituencyList.cshtml" />
+    <Content Include="Views\Constituency\ConstituencyForm.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\Administration\UsersList.cshtml" />
     <Content Include="Views\Administration\Details.cshtml" />
@@ -643,6 +647,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104202043260_AddSeatsToLands.resx">
       <DependentUpon>202104202043260_AddSeatsToLands.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105112033053_PartyFullNameIsRequired.resx">
+      <DependentUpon>202105112033053_PartyFullNameIsRequired.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

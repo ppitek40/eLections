@@ -9,7 +9,7 @@ namespace eLections.Models.ViewModels
     public class CandidateFormViewModel
     {
         public Candidate Candidate { get; set; }
-        public IEnumerable<Land> Lands { get; set; }
+        public IEnumerable<Constituency> Constituencies { get; set; }
         public IEnumerable<Party> Parties { get; set; }
 
     }

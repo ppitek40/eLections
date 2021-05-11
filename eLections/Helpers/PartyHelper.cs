@@ -37,27 +37,27 @@ namespace eLections.Helpers
             }
         }
 
-        public async Task<List<PartyLandVotes>> SumPartyVotesInLandAsync(int landId,int summaryVotes)
+        public async Task<List<PartyConstituencyVotes>> SumPartyVotesInConstituencyAsync(int constituencyId, int summaryVotes)
         {
-            var candidatesInLand = await _context.Candidates.Where(c => c.LandId == landId).ToListAsync();
-            var PartyList = await _context.Parties.Where(p=>IsPartyQualified(p,summaryVotes)).ToListAsync();
-            var PartyLandVotesList = new List<PartyLandVotes>();
+            var candidatesInConstituency = await _context.Candidates.Where(c => c.ConstituencyId == constituencyId).ToListAsync();
+            var partyList = await _context.Parties.Where(p=>IsPartyQualified(p,summaryVotes)).ToListAsync();
+            var partyConstituencyVotesList = new List<PartyConstituencyVotes>();
             foreach (var party in PartyList)
             {
-                var votes = candidatesInLand
+                var votes = candidatesInConstituency
                     .Where(c=>c.PartyId==party.Id)
                     .Sum(c=>c.NumberOfVotes.Value);
-                
 
-                PartyLandVotesList.Add(new PartyLandVotes
+
+                partyConstituencyVotesList.Add(new PartyConstituencyVotes
                 {
                     PartyId = party.Id,
-                    LandId = landId,
+                    ConstituencyId = constituencyId,
                     Votes = votes
                 });
             }
 
-            return PartyLandVotesList;
+            return partyConstituencyVotesList;
         }
     }
 }

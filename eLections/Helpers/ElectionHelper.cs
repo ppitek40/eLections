@@ -33,33 +33,33 @@ namespace eLections.Helpers
             }
             var parties = _context.Parties.ToList();
             var qualifiedParties = new List<Party>();
-            var lands = _context.Lands.ToList();
+            var constituencies = _context.Constituencies.ToList();
 
             var summaryVotes = await _candidatesHelper.SumVotes();
 
 
-            foreach (var land in lands)
+            foreach (var constituency in constituencies)
             {
 
-                List<PartyLandVotesMultiplier> partyLandVotes = (await _partyHelper.SumPartyVotesInLandAsync(land.Id, summaryVotes))
-                    .Where(p => p.LandId == land.Id)
-                    .Cast<PartyLandVotesMultiplier>()
+                List<PartyConstituencyVotesMultiplier> partyConstituencyVotes = (await _partyHelper.SumPartyVotesInConstituencyAsync(constituency.Id, summaryVotes))
+                    .Where(p => p.ConstituencyId == constituency.Id)
+                    .Cast<PartyConstituencyVotesMultiplier>()
                     .ToList();
 
-                for (int i = 0; i < land.Seats; i++)
+                for (int i = 0; i < constituency.Seats; i++)
                 {
-                    var maxValueOfVotes = partyLandVotes
+                    var maxValueOfVotes = partyConstituencyVotes
                         .Max(p => p.Votes / p.Multiplier);
-                    partyLandVotes.Find(p => p.Votes == maxValueOfVotes).Multiplier++;
+                    partyConstituencyVotes.Find(p => p.Votes == maxValueOfVotes).Multiplier++;
 
                 }
 
-                var earnedSeats = partyLandVotes
+                var earnedSeats = partyConstituencyVotes
                     .Where(p => p.Multiplier > 1)
                     .ToList();
                 earnedSeats.ForEach(p => p.Multiplier -= 1);
 
-                _candidatesHelper.GiveSeatsInLand(earnedSeats, land.Id);
+                _candidatesHelper.GiveSeatsInConstituency(earnedSeats, constituency.Id);
                 
             }
             return CalculationResult.OK;

@@ -8576,4 +8576,7 @@ a.list-group-item-danger.active {
 .top-space {
     margin-top: 15px;
 }
+.btn-smaller {
+    padding: 2px 12px;
+}
 

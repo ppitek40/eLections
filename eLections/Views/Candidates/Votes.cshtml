@@ -15,7 +15,7 @@
     </div>
     @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary right-space">Save</button>
-    <button class="btn">Cancel</button>
+    @Html.ActionLink("Cancel","Index",null,new {@class="btn btn-default"})
 }
 
 @section Scripts {

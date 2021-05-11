@@ -5,7 +5,7 @@ using System.Web;
 
 namespace eLections.Models
 {
-    public class PartyLandVotesMultiplier : PartyLandVotes
+    public class PartyConstituencyVotesMultiplier : PartyConstituencyVotes
     {
         public int Multiplier
         {

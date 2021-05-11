@@ -143,7 +143,7 @@ namespace eLections.Controllers
 
             var viewModel = new RegisterViewModel
             {
-                Lands = DBcontext.Lands.ToList()
+                Constituencies = DBcontext.Constituencies.ToList()
             };
             DBcontext.Dispose();
             return View(viewModel);
@@ -162,7 +162,7 @@ namespace eLections.Controllers
                 {
                     UserName = model.Email, 
                     Email = model.Email,
-                    LandId = model.LandId
+                    ConstituencyId = model.ConstituencyId
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

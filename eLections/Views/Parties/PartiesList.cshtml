@@ -1,11 +1,11 @@
 ﻿
 @{
-    ViewBag.Title = "PartiesList";
+    ViewBag.Title = "Parties";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>PartiesList</h2>
-@Html.ActionLink("Create", "Create", "Parties", null, new { @class = "btn btn-primary" })
+<h2>Parties</h2>
+@Html.ActionLink("Create", "Create", "Parties", null, new { @class = "btn btn-primary bottom-space" })
 
 <table id="parties" class="table table-bordered table-hover">
     <thead>
@@ -40,7 +40,7 @@
                     {
                         data: "id",
                         render: function(data) {
-                            return "<button data-party-id=" + data + " class ='btn-link js-delete'>Delete</button>";
+                            return "<button data-party-id=" + data + " class ='btn btn-danger btn-smaller js-delete'>Delete</button>";
                         }
                     }
                 ]

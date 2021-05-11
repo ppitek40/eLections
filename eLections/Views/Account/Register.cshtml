@@ -30,9 +30,9 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.LandId, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.ConstituencyId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.LandId, new SelectList(Model.Lands, "Id", "Name"), new { @class = "form-control" })
+            @Html.DropDownListFor(m => m.ConstituencyId, new SelectList(Model.Constituencies, "Id", "Name"), new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
