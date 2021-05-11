@@ -13,6 +13,7 @@ namespace eLections.Models
         [Display(Name = "Party Name")]
         public String ShortName { get; set; }
         public String FullName { get; set; }
+        public bool IsCoalition { get; set; }
         public bool IsInSejm { get; set; }
     }
 }

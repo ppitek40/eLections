@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Web;
 
 namespace eLections.Models
@@ -12,5 +13,6 @@ namespace eLections.Models
         public DateTime StartOfElections { get; set; }
         public DateTime? EndOfElections { get; set; }
 
+        
     }
 }
