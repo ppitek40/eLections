@@ -5,7 +5,7 @@
 }
 
 <h2>Constituencies</h2>
-@Html.ActionLink("Create", "Create", "Constituencies", null, new { @class = "btn btn-primary" })
+@Html.ActionLink("Create", "Create", "Constituencies", null, new { @class = "btn btn-primary bottom-space" })
 
 <table id="constituencies" class="table table-bordered table-hover">
     <thead>
@@ -24,7 +24,7 @@
 @section scripts
 {
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var table = $("#constituencies").DataTable({
                 ajax: {
                     url: "/api/constituencies",
@@ -39,8 +39,8 @@
                     },
                     {
                         data: "id",
-                        render: function(data) {
-                            return "<button data-constituency-id=" + data + " class ='btn-link js-delete'>Delete</button>";
+                        render: function (data) {
+                            return "<button data-constituency-id=" + data + " class ='btn btn-danger btn-smaller js-delete'>Delete</button>";
                         }
                     }
                 ]
@@ -49,17 +49,18 @@
 
             $("#constituencies").on("click",
                 ".js-delete",
-                function() {
+                function () {
                     var button = $(this);
 
                     bootbox.confirm("U sure?",
-                        function(result) {
+                        function (result) {
                             if (result) {
                                 $.ajax({
                                     url: "/api/constituencies/" + button.attr("data-constituency-id"),
                                     method: "DELETE",
-                                    success: function() {
+                                    success: function () {
                                         table.row(button.parents("tr")).remove().draw();
+                                        toastr.success("Candidate has been deleted.");
                                     }
                                 });
                             }

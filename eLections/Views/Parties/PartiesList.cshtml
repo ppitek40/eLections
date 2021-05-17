@@ -24,7 +24,7 @@
 @section scripts
 {
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var table = $("#parties").DataTable({
                 ajax: {
                     url: "/api/parties",
@@ -33,13 +33,13 @@
                 columns: [
                     {
                         data: "fullName",
-                        render: function(data, type, party) {
+                        render: function (data, type, party) {
                             return "<a href='/parties/edit/" + party.id + "'>" + data + "</a>";
                         }
                     },
                     {
                         data: "id",
-                        render: function(data) {
+                        render: function (data) {
                             return "<button data-party-id=" + data + " class ='btn btn-danger btn-smaller js-delete'>Delete</button>";
                         }
                     }
@@ -49,17 +49,18 @@
 
             $("#parties").on("click",
                 ".js-delete",
-                function() {
+                function () {
                     var button = $(this);
 
                     bootbox.confirm("U sure?",
-                        function(result) {
+                        function (result) {
                             if (result) {
                                 $.ajax({
                                     url: "/api/parties/" + button.attr("data-party-id"),
                                     method: "DELETE",
-                                    success: function() {
+                                    success: function () {
                                         table.row(button.parents("tr")).remove().draw();
+                                        toastr.success("Candidate has been deleted.");
                                     }
                                 });
                             }

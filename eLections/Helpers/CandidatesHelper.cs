@@ -43,7 +43,7 @@ namespace eLections.Helpers
 
         public async Task<int> SumVotes()
         {
-            var summaryVotes =  _context.Candidates.Sum(c => c.NumberOfVotes.Value);
+            var summaryVotes = await _context.Candidates.SumAsync(c => c.NumberOfVotes.Value);
             return summaryVotes;
         }
 

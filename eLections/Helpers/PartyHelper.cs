@@ -42,7 +42,7 @@ namespace eLections.Helpers
             var candidatesInConstituency = await _context.Candidates.Where(c => c.ConstituencyId == constituencyId).ToListAsync();
             var partyList = await _context.Parties.Where(p=>IsPartyQualified(p,summaryVotes)).ToListAsync();
             var partyConstituencyVotesList = new List<PartyConstituencyVotes>();
-            foreach (var party in PartyList)
+            foreach (var party in partyList)
             {
                 var votes = candidatesInConstituency
                     .Where(c=>c.PartyId==party.Id)

@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<eLections.Models.Election>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Elections";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-<button id="create" class="btn btn-primary">Create</button>
+<h2>Elections</h2>
+<button id="create" class="btn btn-primary bottom-space">Create</button>
 
 <table id="elections" class="table table-bordered table-hover">
     <thead>
@@ -30,7 +30,7 @@
                 <td>
                     @if (election.EndOfElections == null)
                     {
-                        @Html.Raw("Active");<button id="calculate" election-id=@election.Id class="btn btn-info left-space">Calculate</button>
+                        @Html.Raw("Active");<button id="calculate" election-id=@election.Id class="btn btn-info left-space btn-smaller">Calculate</button>
                     }
                     else
                     {
