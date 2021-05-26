@@ -338,3 +338,4 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/eLections/Controllers/ApiControllers/AutoFillController.cs

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -16,16 +17,16 @@ namespace eLections.Helpers
         private readonly ApplicationDbContext _context;
         private readonly CandidatesHelper _candidatesHelper;
         private readonly PartyHelper _partyHelper;
-        private readonly ElectionHelper _electionHelper;
+        
         public ElectionHelper(ApplicationDbContext context)
         {
             _context = context;
             _candidatesHelper = new CandidatesHelper(_context);
             _partyHelper = new PartyHelper(_context);
-            _electionHelper = new ElectionHelper(_context);
+            
         }
 
-        public async Task<int> CalculateElections()
+        public async Task<int> CalculateElectionsAsync()
         {
             if (!_candidatesHelper.DoAllCandidatesHaveVotes())
             {
@@ -41,17 +42,14 @@ namespace eLections.Helpers
             foreach (var constituency in constituencies)
             {
 
-                List<PartyConstituencyVotesMultiplier> partyConstituencyVotes = (await _partyHelper.SumPartyVotesInConstituencyAsync(constituency.Id, summaryVotes))
-                    .Where(p => p.ConstituencyId == constituency.Id)
-                    .Cast<PartyConstituencyVotesMultiplier>()
-                    .ToList();
+                var partyConstituencyVotes2 = await _partyHelper.SumPartyVotesInConstituencyAsync(constituency.Id, summaryVotes);
+                var partyConstituencyVotes= partyConstituencyVotes2.Where(p => p.ConstituencyId == constituency.Id).ToList();
 
                 for (int i = 0; i < constituency.Seats; i++)
                 {
                     var maxValueOfVotes = partyConstituencyVotes
                         .Max(p => p.Votes / p.Multiplier);
-                    partyConstituencyVotes.Find(p => p.Votes == maxValueOfVotes).Multiplier++;
-
+                    partyConstituencyVotes.Find(p => p.Votes/p.Multiplier == maxValueOfVotes).Multiplier++;
                 }
 
                 var earnedSeats = partyConstituencyVotes
@@ -63,6 +61,17 @@ namespace eLections.Helpers
                 
             }
             return CalculationResult.OK;
+        }
+
+        public async Task PrepareNewElections()
+        {
+           var candidates= await _context.Candidates.ToListAsync();
+
+           foreach (var candidate in candidates)
+           {
+               candidate.NumberOfVotes = null;
+               candidate.IsInParliament = false;
+           }
         }
 
     }

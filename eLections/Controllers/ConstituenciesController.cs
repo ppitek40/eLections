@@ -8,7 +8,7 @@ using eLections.Models;
 
 namespace eLections.Controllers
 {
-    [Authorize(Roles="CanManageLands")]
+    [Authorize(Roles= "CanManageConstituencies")]
     public class ConstituenciesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -42,6 +42,7 @@ namespace eLections.Controllers
 
         // POST: Constituencies/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Constituency constituency)
         {
             if (!ModelState.IsValid)
@@ -68,6 +69,7 @@ namespace eLections.Controllers
 
         // POST: Constituencies/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Constituency constituency)
         {
             if (!ModelState.IsValid)

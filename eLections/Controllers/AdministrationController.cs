@@ -35,11 +35,11 @@ namespace eLections.Controllers
         }
 
         // GET: Administration
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var users = _userManager.Users.Include(u=> u.Constituency).ToList();
+            var users = _userManager.Users.Include(u=> u.Constituency).ToListAsync();
             var listOfUserViewModels = new List<UserViewModel>();
-            foreach (var user in users)
+            foreach (var user in await users)
             {
                 listOfUserViewModels.Add(new UserViewModel
                 {
@@ -52,11 +52,11 @@ namespace eLections.Controllers
             return View("UsersList",listOfUserViewModels);
         }
         // GET: Administration/Details/{id}
-        public ActionResult Details(string id)
+        public async Task<ActionResult> Details(string id)
         {
-            var user = _userManager.Users
-                                    .Include(u => u.Constituency)
-                                    .SingleOrDefault(u => u.Id == id);
+            var user = await _userManager.Users
+                .Include(u => u.Constituency)
+                .SingleOrDefaultAsync(u => u.Id == id);
             
             if (user == null)
             {
@@ -87,8 +87,8 @@ namespace eLections.Controllers
             }
 
             var viewModel = new List<ManageRoleViewModel>();
-            var roles = _roleManager.Roles.ToList();
-            foreach (var role in roles)
+            var roles = await _roleManager.Roles.ToListAsync();
+            foreach (var role in  roles)
             {
                 viewModel.Add(new ManageRoleViewModel
                 {
@@ -103,6 +103,7 @@ namespace eLections.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> ManageRoles(List<ManageRoleViewModel> model, string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -111,20 +112,25 @@ namespace eLections.Controllers
             {
                 return HttpNotFound();
             }
-
+            var tasks = new List<Task<IdentityResult>>();
             var roles = await _userManager.GetRolesAsync(id);
             foreach (var role in roles)
-            {
-                await _userManager.RemoveFromRoleAsync(id, role);
+            { 
+              tasks.Add(_userManager.RemoveFromRoleAsync(id, role));
             }
+
+            await Task.WhenAll(tasks);
+            tasks.Clear();
 
             foreach (var managedRole in model)
             {
                 if (managedRole.IsSelected)
                 {
-                    await _userManager.AddToRoleAsync(id, managedRole.RoleName);
+                     tasks.Add(_userManager.AddToRoleAsync(id, managedRole.RoleName));
                 }
             }
+
+            await Task.WhenAll(tasks);
             
             return RedirectToAction("Index");
 

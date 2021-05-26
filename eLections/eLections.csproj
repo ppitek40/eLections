@@ -183,6 +183,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdministrationController.cs" />
+    <Compile Include="Controllers\ApiControllers\AutoFillController.cs" />
     <Compile Include="Controllers\ApiControllers\CandidatesController.cs" />
     <Compile Include="Controllers\ApiControllers\ElectionsController.cs" />
     <Compile Include="Controllers\ApiControllers\ConstituenciesController.cs" />
@@ -265,6 +266,10 @@
     <Compile Include="Migrations\202105112106326_ChangedLandsToConstituencies.Designer.cs">
       <DependentUpon>202105112106326_ChangedLandsToConstituencies.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105232122344_ChangesInIsInSejm.cs" />
+    <Compile Include="Migrations\202105232122344_ChangesInIsInSejm.Designer.cs">
+      <DependentUpon>202105232122344_ChangesInIsInSejm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -276,9 +281,9 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Party.cs" />
     <Compile Include="Models\PartyConstituencyVotes.cs" />
-    <Compile Include="Models\PartyConstituencyVotesMultiplier.cs" />
     <Compile Include="Models\ViewModels\CandidateFormViewModel.cs" />
     <Compile Include="Models\ViewModels\ManageRoleViewModel.cs" />
+    <Compile Include="Models\ViewModels\ResultsViewModel.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Models\Votes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -596,7 +601,7 @@
     <Content Include="Views\Administration\Details.cshtml" />
     <Content Include="Views\Administration\ManageRoles.cshtml" />
     <Content Include="Views\Candidates\Votes.cshtml" />
-    <Content Include="Views\Home\IndexGuest.cshtml" />
+    <Content Include="Views\Home\IndexResults.cshtml" />
     <Content Include="Views\Elections\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -663,6 +668,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105112106326_ChangedLandsToConstituencies.resx">
       <DependentUpon>202105112106326_ChangedLandsToConstituencies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105232122344_ChangesInIsInSejm.resx">
+      <DependentUpon>202105232122344_ChangesInIsInSejm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

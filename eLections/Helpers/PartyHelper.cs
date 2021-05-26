@@ -26,25 +26,25 @@ namespace eLections.Helpers
         {
             var sum = _context.Candidates.Where(c => c.PartyId == party.Id).Sum(c=>c.NumberOfVotes.Value);
             
-
             if (party.IsCoalition)
             {
-                return sum >= summaryVotes * 0.08;
+                return  sum >= summaryVotes * 0.08;
             }
             else
             {
-                return sum >= summaryVotes * 0.05;
+                return  sum >= summaryVotes * 0.05;
             }
         }
 
         public async Task<List<PartyConstituencyVotes>> SumPartyVotesInConstituencyAsync(int constituencyId, int summaryVotes)
         {
-            var candidatesInConstituency = await _context.Candidates.Where(c => c.ConstituencyId == constituencyId).ToListAsync();
-            var partyList = await _context.Parties.Where(p=>IsPartyQualified(p,summaryVotes)).ToListAsync();
+            var candidatesInConstituency =  await _context.Candidates.Where(c => c.ConstituencyId == constituencyId).ToListAsync();
+            var partyList = _context.Parties.ToList();
+            partyList= partyList.Where(p =>  IsPartyQualified(p, summaryVotes)).ToList();
             var partyConstituencyVotesList = new List<PartyConstituencyVotes>();
             foreach (var party in partyList)
             {
-                var votes = candidatesInConstituency
+                var votes = ( candidatesInConstituency)
                     .Where(c=>c.PartyId==party.Id)
                     .Sum(c=>c.NumberOfVotes.Value);
 
@@ -53,7 +53,8 @@ namespace eLections.Helpers
                 {
                     PartyId = party.Id,
                     ConstituencyId = constituencyId,
-                    Votes = votes
+                    Votes = votes,
+                    Multiplier = 1
                 });
             }
 

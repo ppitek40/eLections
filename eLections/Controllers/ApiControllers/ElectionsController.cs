@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
 using System.Net;
@@ -16,15 +17,11 @@ namespace eLections.Controllers.ApiControllers
     public class ElectionsController : ApiController
     {
         private readonly ApplicationDbContext _context;
-        private readonly CandidatesHelper _candidatesHelper;
-        private readonly PartyHelper _partyHelper;
         private readonly ElectionHelper _electionHelper;
 
         public ElectionsController()
         {
             _context = new ApplicationDbContext();
-            _candidatesHelper = new CandidatesHelper(_context);
-            _partyHelper = new PartyHelper(_context);
             _electionHelper = new ElectionHelper(_context);
         }
 
@@ -38,35 +35,26 @@ namespace eLections.Controllers.ApiControllers
         {
             return Ok(_context.Elections.ToList());
         }
-        //GET /api/Elections
-        public IHttpActionResult GetElection(int id)
-        {
-            var election = _context.Elections.FirstOrDefault(e => e.Id == id);
-            if (election == null)
-            {
-                return NotFound();
-            }
-            return Ok(election);
-        }
-
+       
         // POST: /api/Elections
         [HttpPost]
-        public IHttpActionResult CreateElection()
+        public async Task<IHttpActionResult> CreateElection()
         {
-            if (_context.Elections.Any(e => e.EndOfElections == null))
+            if (await _context.Elections.AnyAsync(e => e.EndOfElections == null))
             {
                 return ResponseMessage(new HttpResponseMessage(HttpStatusCode.MethodNotAllowed));
             }
-            else
+
+            await _electionHelper.PrepareNewElections();
+            
+            var election = new Election
             {
-                var election = new Election
-                {
-                    StartOfElections = DateTime.Now
-                };
-                _context.Elections.Add(election);
-                _context.SaveChanges();
-                return Created(new Uri(Request.RequestUri +"/"+election.Id), election);
-            }
+                StartOfElections = DateTime.Now
+            };
+            _context.Elections.Add(election);
+            await _context.SaveChangesAsync();
+            return Created(new Uri(Request.RequestUri +"/"+election.Id), election);
+        
         }
         // POST: /api/Elections/Calculate/{id}
         [HttpPost]
@@ -80,11 +68,13 @@ namespace eLections.Controllers.ApiControllers
                 return NotFound();
             }
 
-            await _electionHelper.CalculateElections();
-
+            if (await _electionHelper.CalculateElectionsAsync() != CalculationResult.OK)
+            {
+                return BadRequest();
+            }
 
             election.EndOfElections=DateTime.Now;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return Ok();
         }
     }

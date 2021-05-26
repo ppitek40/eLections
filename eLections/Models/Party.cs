@@ -17,6 +17,5 @@ namespace eLections.Models
         public String FullName { get; set; }
         [Display(Name = "Is Coalition")]
         public bool IsCoalition { get; set; }
-        public bool IsInSejm { get; set; }
     }
 }

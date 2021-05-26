@@ -16,5 +16,6 @@ namespace eLections.Models
         public int ConstituencyId { get; set; }
         public Constituency Constituency { get; set; }
         public int Votes { get; set; }
+        public int Multiplier { get; set; }
     }
 }

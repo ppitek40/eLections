@@ -47,7 +47,7 @@ namespace eLections.Helpers
             return summaryVotes;
         }
 
-        public void GiveSeatsInConstituency(List<PartyConstituencyVotesMultiplier> partyConstituencyVotes, int constituencyId)
+        public void GiveSeatsInConstituency(List<PartyConstituencyVotes> partyConstituencyVotes, int constituencyId)
         {
             foreach (var party in partyConstituencyVotes)
             {
@@ -55,10 +55,9 @@ namespace eLections.Helpers
                     .Where(c => c.PartyId == party.PartyId && c.ConstituencyId==party.ConstituencyId)
                     .OrderByDescending(c=>c.NumberOfVotes.Value)
                     .Take(party.Multiplier);
-                candidates.ForEach(c => c.IsInSejm = true);
+                candidates.ForEach(c => c.IsInParliament = true);
 
             }
-
             _context.SaveChanges();
         }
     }

@@ -17,7 +17,7 @@ namespace eLections.Models
         [Required]
         [Display(Name = "Surname")]
         public String Surname { get; set; }
-        public Boolean IsInSejm { get; set; }
+        public Boolean IsInParliament { get; set; }
         [Display(Name = "Number of votes")]
         [Range(0,Int32.MaxValue)]
         public int? NumberOfVotes { get; set; }

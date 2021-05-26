@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
@@ -42,7 +44,7 @@ namespace eLections.Controllers
         // POST: Parties/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Party party)
+        public async Task<ActionResult> Create(Party party)
         {
             if (!ModelState.IsValid)
             {
@@ -50,15 +52,15 @@ namespace eLections.Controllers
             }
 
             _context.Parties.Add(party);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
 
         // GET: Parties/Edit/{id}
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var party = _context.Parties.SingleOrDefault(p => p.Id == id);
+            var party = await _context.Parties.SingleOrDefaultAsync(p => p.Id == id);
             if (party == null)
             {
                 return HttpNotFound();
@@ -69,35 +71,35 @@ namespace eLections.Controllers
 
         // PUT: Parties/Edit/{id}
         [HttpPost]
-        public ActionResult Edit(Party party)
+        public async Task<ActionResult> Edit(Party party)
         {
             if (!ModelState.IsValid)
             {
                 return View("PartyForm", party);
             }
 
-            var partyInDb = _context.Parties.SingleOrDefault(p => p.Id == party.Id);
+            var partyInDb = await _context.Parties.SingleOrDefaultAsync(p => p.Id == party.Id);
             if (partyInDb == null)
             {
                 return HttpNotFound();
             }
 
             _mapper.Map<Party, Party>(party, partyInDb);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
         // DELETE: Parties/Delete/{id}
         [HttpDelete]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var partyInDb = _context.Parties.SingleOrDefault(p => p.Id == id);
+            var partyInDb = await _context.Parties.SingleOrDefaultAsync(p => p.Id == id);
             if (partyInDb == null)
             {
                 return HttpNotFound();
             }
 
             _context.Parties.Remove(partyInDb);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
     }

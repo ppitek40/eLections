@@ -38,13 +38,13 @@ namespace eLections.Controllers
         }
 
         // GET: Candidates/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             var viewModel = new CandidateFormViewModel
             {
                 Candidate = null,
-                Constituencies = _context.Constituencies.ToList(),
-                Parties = _context.Parties.ToList()
+                Constituencies = await _context.Constituencies.OrderBy(c=>c.Name).ToListAsync(),
+                Parties = await _context.Parties.ToListAsync()
 
             };
             return View("CandidateForm", viewModel);
@@ -53,29 +53,29 @@ namespace eLections.Controllers
 
         //POST: Candidates/Create
         [HttpPost]
-        public ActionResult Create(Candidate candidate)
+        public async Task<ActionResult> Create(Candidate candidate)
         {
             if (!ModelState.IsValid)
             {
                 var viewModel = new CandidateFormViewModel
                 {
                     Candidate = candidate,
-                    Constituencies = _context.Constituencies.ToList(),
-                    Parties = _context.Parties.ToList()
+                    Constituencies = await _context.Constituencies.OrderBy(c => c.Name).ToListAsync(),
+                    Parties = await _context.Parties.ToListAsync()
                 };
                 return View("CandidateForm", viewModel);
             }
 
             _context.Candidates.Add(candidate);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
 
         //GET: Candidates/Edit/{id}
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var candidate = _context.Candidates.SingleOrDefault(c => c.Id == id);
+            var candidate = await _context.Candidates.SingleOrDefaultAsync(c => c.Id == id);
             if (candidate == null)
             {
                 return HttpNotFound();
@@ -85,50 +85,52 @@ namespace eLections.Controllers
             var viewModel = new CandidateFormViewModel
             {
                 Candidate = candidate,
-                Constituencies = _context.Constituencies.ToList(),
-                Parties = _context.Parties.ToList()
+                Constituencies = await _context.Constituencies.OrderBy(c => c.Name).ToListAsync(),
+                Parties = await _context.Parties.ToListAsync()
             };
             return View("CandidateForm", viewModel);
         }
 
         //PUT: Candidates/Edit/{id}
-        [HttpPut]
-        public ActionResult Edit(Candidate candidate)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public async Task<ActionResult> Edit(Candidate candidate)
         {
             if (!ModelState.IsValid)
             {
                 var viewModel = new CandidateFormViewModel
                 {
                     Candidate = candidate,
-                    Constituencies = _context.Constituencies.ToList(),
-                    Parties = _context.Parties.ToList()
+                    Constituencies = await _context.Constituencies.OrderBy(c => c.Name).ToListAsync(),
+                    Parties = await _context.Parties.ToListAsync()
                 };
                 return View("CandidateForm", viewModel);
             }
 
-            var candidateInDb = _context.Candidates.SingleOrDefault(c => c.Id == candidate.Id);
+            var candidateInDb = await _context.Candidates.SingleOrDefaultAsync(c => c.Id == candidate.Id);
             if (candidateInDb == null)
             {
                 return HttpNotFound();
             }
 
             _mapper.Map<Candidate, Candidate>(candidate, candidateInDb);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
         // DELETE: /Candidates/Delete/{id}
         [HttpDelete]
-        public ActionResult Delete(int id)
+        public async  Task<ActionResult> Delete(int id)
         {
-            var candidateInDb = _context.Candidates.SingleOrDefault(c => c.Id == id);
+            var candidateInDb = await _context.Candidates.SingleOrDefaultAsync(c => c.Id == id);
             if (candidateInDb == null)
             {
                 return HttpNotFound();
             }
 
             _context.Candidates.Remove(candidateInDb);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
         // GET: /Candidates/Votes/{id}
@@ -147,7 +149,7 @@ namespace eLections.Controllers
         public async Task<ActionResult> Votes(Candidate candidate, int id)
         {
             var candidateInDb = await _context.Candidates.FirstOrDefaultAsync(c => c.Id == id);
-            if (candidate==null)
+            if (candidateInDb == null)
             {
                 return HttpNotFound();
             }
